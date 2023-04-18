@@ -1,0 +1,31 @@
+body{
+    background-color: rgb(218, 219, 134);
+}
+h1 {
+    font-style: italic;
+    text-decoration: underline;
+    color: rgb(247, 54, 160);
+}
+h2 {
+    color: rgb(247, 54, 160);
+}
+p {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+
+    /* novas linhas */
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    border: 2px dotted red
+}
+p {
+    border: 1px solid black;
+}
