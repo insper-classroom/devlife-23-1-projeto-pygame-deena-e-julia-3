@@ -1,31 +1,26 @@
 body{
     background-color: rgb(218, 219, 134);
+    
+    display: flex;
+    justify-content: center;
 }
+
 h1 {
+    text-align: center;
     font-style: italic;
     text-decoration: underline;
-    color: rgb(247, 54, 160);
+    color: rgb(0, 0, 0);
 }
 h2 {
-    color: rgb(247, 54, 160);
+    color: rgb(0, 0, 0);
 }
-p {
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-
-    /* novas linhas */
-    margin-top: 50px;
-    margin-right: 50px;
-    margin-bottom: 50px;
-    margin-left: 50px;
-
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    border: 2px dotted red
+p{
+    border-left:100px ;
+    border-right: 100px;
+    
 }
-p {
-    border: 1px solid black;
+
+.content {
+    width: 100%;
+    max-width: 800px;
 }
