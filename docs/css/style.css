@@ -3,7 +3,8 @@ body{
     
     display: flex;
     justify-content: center;
-    background-image: url("https://i.pinimg.com/564x/f1/be/74/f1be74dfd5a35549c496d9cc2810be1a.jpg");
+    background-image: url("https://github.com/insper-classroom/devlife-23-1-projeto-pygame-deena-e-julia-3/blob/main/docs/fundo%20site%20done.png?raw=true");
+    background-size: 4rem;
     
 }
 
@@ -14,11 +15,6 @@ h1 {
 }
 h2 {
     color: rgb(0, 0, 0);
-}
-p{
-    border-left:100px ;
-    border-right: 100px;
-    
 }
 
 
