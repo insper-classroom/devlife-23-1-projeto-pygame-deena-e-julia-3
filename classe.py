@@ -1,7 +1,7 @@
 from funcoes import *
 import pygame 
 import random
-
+# Para conseguirmos fazer essas classes ultilizamos como base os videos https://www.youtube.com/watch?v=gomDSZaay3E e https://www.youtube.com/watch?v=WSPstecsF90 do Hashtag Programação.
 class Pomo_de_ouro_classico:
 
     def __init__(self,posição_x,posição_y):
