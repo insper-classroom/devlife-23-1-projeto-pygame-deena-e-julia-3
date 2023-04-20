@@ -1,3 +1,4 @@
 import classe
-inicia= classe.inicializa()
-classe.game_loop(inicia)
+import funcoes
+inicia,assets= funcoes.inicializa()
+funcoes.game_loop(inicia,assets)
