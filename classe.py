@@ -2,7 +2,7 @@ from funcoes import *
 import pygame 
 import random
 
-class Pomo_de_ouro:
+class Pomo_de_ouro_classico:
 
     def __init__(self,posição_x,posição_y):
         self.posição_x=posição_x#posição do pomo x
@@ -21,3 +21,6 @@ class Pomo_de_ouro:
         if estado <20:
             estado=20#limitando o tamanho do deslocamento pra 20 pixel de altura 
         self.posição_y+= estado #o passaro não muda de posição x ja que o movimento do passaro deve ser de cima para baixo logo quando isso acontesse a unica unidade modificada é o y 
+
+class torre:
+    pass

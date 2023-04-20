@@ -4,7 +4,7 @@ import os
 def inicializa():
     pygame.init()
     window=pygame.display.set_mode((350, 420))
-    pygame.display.set_caption("Goldenfly")
+    pygame.display.set_caption("GoldenFly")
     imagem_fundo=pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
     imagem_pomoouro=pygame.image.load(os.path.join('fotos','pixilart-drawing.png'))
     imagem_casas=pygame.image.load(os.path.join('fotos','casas.png'))
