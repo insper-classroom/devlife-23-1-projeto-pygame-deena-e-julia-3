@@ -6,7 +6,7 @@ def inicializa():
     window=pygame.display.set_mode((350, 420))
     pygame.display.set_caption("GoldenFly")
     imagem_fundo=pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
-    imagem_pomoouro=pygame.image.load(os.path.join('fotos','pixilart-drawing.png'))
+    imagem_pomoouro=pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
     imagem_casas=pygame.image.load(os.path.join('fotos','casas.png'))
     assets={
         'imagem_fundo':imagem_fundo,
