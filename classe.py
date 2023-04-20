@@ -4,6 +4,9 @@ import random
 imagem_pomoouro=pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
 imagem_torre=pygame.image.load(os.path.join('fotos',))
 #para conseguirmos fazer essa classe usamos como base o video https://www.youtube.com/watch?v=gomDSZaay3E e https://www.youtube.com/watch?v=WSPstecsF90.
+
+# alteracao teste feita pelo Miranda para demonstrar branches
+
 class Pomo_de_ouro_classico:
 
     def __init__(self,posição_x,posição_y):
