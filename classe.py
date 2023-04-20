@@ -1,7 +1,7 @@
 from funcoes import *
 import pygame 
 import random
-# Para conseguirmos fazer essas classes ultilizamos como base os videos https://www.youtube.com/watch?v=gomDSZaay3E e https://www.youtube.com/watch?v=WSPstecsF90 do Hashtag Programação.
+#para conseguirmos fazer essa classe usamos como base o video https://www.youtube.com/watch?v=gomDSZaay3E e https://www.youtube.com/watch?v=WSPstecsF90.
 class Pomo_de_ouro_classico:
 
     def __init__(self,posição_x,posição_y):
@@ -22,5 +22,5 @@ class Pomo_de_ouro_classico:
             estado=20#limitando o tamanho do deslocamento pra 20 pixel de altura 
         self.posição_y+= estado #o passaro não muda de posição x ja que o movimento do passaro deve ser de cima para baixo logo quando isso acontesse a unica unidade modificada é o y 
 
-class torre:
+class Torre:
     pass
