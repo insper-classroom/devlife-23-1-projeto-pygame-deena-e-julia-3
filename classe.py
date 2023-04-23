@@ -1,36 +1,74 @@
 from funcoes import *
 import pygame 
 import random
-imagem_pomoouro=pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
-imagem_torre=pygame.image.load(os.path.join('fotos',))
+
+imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
+imagem_torre = pygame.image.load(os.path.join('fotos','torres_arrumadas.png'))
 #para conseguirmos fazer essa classe usamos como base o video https://www.youtube.com/watch?v=gomDSZaay3E e https://www.youtube.com/watch?v=WSPstecsF90.
 class Pomo_de_ouro_classico:
 
     def __init__(self,posição_x,posição_y):
-        self.posição_x=posição_x#posição do pomo x
-        self.posição_y=posição_y#altura do pomo 
-        self.velocidade= 0#a velocidade que ele se encontra 
-        self.angulo=0# o angulo dele para sabermos o angulo que ele ira voar
-        self.foto= imagem_pomoouro
+        self.posição_x = posição_x#posição do pomo x
+        self.posição_y = posição_y#altura do pomo 
+        self.velocidade = 0#a velocidade que ele se encontra 
+        self.angulo = 0# o angulo dele para sabermos o angulo que ele ira voar
+        self.altura = self.y 
+        self.tempo = 0
+        self.imagem = imagem_pomoouro
+        self.rotacao_maxima = 25
+        self.velocidade_rotacao = 20
+        self.angulo = 0
 
-    def voar(self):
+    def voar(self): # o pomo so desloca no eixo y, ou vai para cim ou para baixo
         self.velocidade=-10#quando ele voar a velocidade precisa estar negativa para que ele não caia e sim cima
         self.tempo=0# tempo inicial do deslocamento
         self.altura= self.posição_y# a altura atual do pomo de ouro
 
     def movimento(self):
-        self.tempo+=1
-        estado= self.tempo * self.velocidade + 2 * (self.tempo**2)/2#formula para descobrir o estado do pomo ultizando o s=so+v.t+a.t**2/2
-        if estado <20:
-            estado=20#limitando o tamanho do deslocamento pra 20 pixel de altura 
-        self.posição_y+= estado #o passaro não muda de posição x ja que o movimento do passaro deve ser de cima para baixo logo quando isso acontesse a unica unidade modificada é o y 
+        # o angulo e respectivo a posicao que a poma vai cair
+        self.tempo += 1
+        deslocamento = self.tempo * self.velocidade + 2 * (self.tempo**2)/2#formula para descobrir o estado do pomo ultizando o s=so+v.t+a.t**2/2
+        # if estado < 20:
+        #limitando o tamanho do deslocamento pra 20 pixel de altura 
+        #o passaro não muda de posição x ja que o movimento do passaro deve ser de cima para baixo logo quando isso acontesse a unica unidade modificada é o y. Assim, temos que pegar o ponto y e somar com o deslocamento (estado) dele.
+
+        if deslocamento>16:
+            deslocamento = 16
+        elif deslocamento < 0:
+            deslocamento -= 2
+        self.posição_y+= deslocamento
+
+        if deslocamento < 0 or self.y < (self.altura + 50):  # testar as opcoes aqui para ver se voce entendeu a forma feita
+            if self.angulo < self.rotacao_maxima:
+                self.angulo = self.rotacao_maxima
+        else:
+            if self.angulo < -90:
+                self.angulo -= self.velocidade_rotacao
+
+
+        def desenha(self, window):
+            
+            imagem_rotacionada = pygame.transform.rotate(self.image, self.angulo)
+            centro_imagem = self.imagem.get_rect(topleft=(self.x, self.y)).center  # perguntar ao miranda a estrutura desse codigo
+            retangulo = imagem_rotacionada.get_rect(center=centro_imagem)
+            # eu uso o topleft para desenhar o retangulo, eu uso o centro para rotacionar o retangulo
+            window.blit(imagem_rotacionada, retangulo.topleft)
+
+            # para fazer a colisao, vamos utilizar o mask. O mask quebra a imagem do passaro, a qual eh um retangulo, em varios mini-retangulos, tipo pixels, e verificar se existe a presenca do passaro e da torre ao mesmo tempo, indicando a colisao.
+            # mask is a perfect collision detection
+            # Voce pega a mascara da bola e a mascara da torra e avalia. Se eles tem pixel em comum, significa que colidiu. Caso contrario, nao colidiu 
+            pygame.mask.from_surface(self.imagem)
+            
+        # sempre que voce quiser desenhar um objeto rotacionado dentro da tela, voce faz esse processo aqui:    
+        # se ele nao tiver todo virado pra cima, ele vai ficar todo virado pra cima, aka rotacao maxima
+        # self.altura = e a altura do pomo desde a ultima vez que ele pulou
 
 class Torre:
     distancia_entre_torres=150
     velocidade=5
     def __init__(self, posicao_x):
         self.x=posicao_x
-        self.altura=0
+        self.altura=0 
         self.parte_de_cima=0#da torre
         self.parte_de_baixo=0#da torre
         #self.imagem =
