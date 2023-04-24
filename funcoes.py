@@ -22,11 +22,18 @@ def inicializa():
     }
     return window,assets, pomo, torre
 
-def atualiza_estado():
+def atualiza_estado(torre, pomo):
+    pygame.time.Clock().tick(20)
     game=True
+    torre.estado()
+    pomo.movimento()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game =False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                pomo.velocidade -= 10
+
     return game
 
 def desenha(window,assets,pomo,torre):
@@ -38,6 +45,5 @@ def desenha(window,assets,pomo,torre):
     return window, assets,pomo, torre
 
 def game_loop(window,assets,pomo,torre):
-    while atualiza_estado():
+    while atualiza_estado(torre, pomo):
         desenha(window,assets,pomo,torre)
-    

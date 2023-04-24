@@ -6,7 +6,7 @@ imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.
 imagem_torre = pygame.image.load(os.path.join('fotos','torres_arrumadas.png'))
 
 state = {
-    't0': -1
+    't0': 0
 }
 #para conseguirmos fazer essa classe usamos como base o video https://www.youtube.com/watch?v=gomDSZaay3E e https://www.youtube.com/watch?v=WSPstecsF90.
 class Pomo_de_ouro_classico:
@@ -31,34 +31,25 @@ class Pomo_de_ouro_classico:
 
     def movimento(self):
 
-        fps = 0 
-        t0 = state[t0]
+        t0 = state['t0']
         t1 = pygame.time.get_ticks()
         calculo = (t1-t0)/1000
-        fps = 1/calculo
         state['t0'] = t1
         # o angulo e respectivo a posicao que a poma vai cair
         # self.tempo += 1
         # deslocamento = self.tempo * self.velocidade + 2 * (self.tempo**2)/2#formula para descobrir o estado do pomo ultizando o s=so+v.t+a.t**2/2
         self.velocidade_y = self.velocidade - self.gravidade * calculo
-        self.posição_y_final = self.posicao_y + self.velocidade_y * calculo
+        self.posição_y += self.velocidade_y * calculo
         
         # if estado < 20:
         #limitando o tamanho do deslocamento pra 20 pixel de altura 
         #o passaro não muda de posição x ja que o movimento do passaro deve ser de cima para baixo logo quando isso acontesse a unica unidade modificada é o y. Assim, temos que pegar o ponto y e somar com o deslocamento (estado) dele.
-        if self.posição_y_final>16:
-            self.posição_y_final = 16
-        elif self.posição_y_final < 0:
-            self.posição_y_final -= 2
-        
-        self.posição_y+= self.posição_y_final
 
-        if self.posição_y_final < 0 or self.y < (self.altura + 50):  # testar as opcoes aqui para ver se voce entendeu a forma feita
-            if self.angulo < self.rotacao_maxima:
-                self.angulo = self.rotacao_maxima
-        else:
-            if self.angulo < -90:
-                self.angulo -= self.velocidade_rotacao
+        if self.posição_y < 0:
+            self.posição_y = 0
+        if self.posição_y > 420 + self.imagem.get_height():
+            self.posição_y = 420 - self.imagem.get_height()
+
 
 
     def desenha(self, window):
