@@ -27,16 +27,13 @@ def atualiza_estado():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game =False
-        # if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-        #     pomo()
-        #     torre()
     return game
 
 def desenha(window,assets,pomo,torre):
     window.fill((255,255, 255))
     window.blit(assets['imagem_fundo'],(0,0))
     pomo.desenha(window)
-    torre.desenha_torre(window)
+    torre.desenha(window)
     pygame.display.update()
     return window, assets,pomo, torre
 

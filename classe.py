@@ -61,18 +61,18 @@ class Pomo_de_ouro_classico:
                 self.angulo -= self.velocidade_rotacao
 
 
-        def desenha(self, window):
-            
-            imagem_rotacionada = pygame.transform.rotate(self.image, self.angulo)
-            centro_imagem = self.imagem.get_rect(topleft=(self.x, self.y)).center  # perguntar ao miranda a estrutura desse codigo
-            retangulo = imagem_rotacionada.get_rect(center=centro_imagem)
-            # eu uso o topleft para desenhar o retangulo, eu uso o centro para rotacionar o retangulo
-            window.blit(imagem_rotacionada, retangulo.topleft)
+    def desenha(self, window):
+        
+        imagem_rotacionada = pygame.transform.rotate(self.imagem, self.angulo)
+        centro_imagem = self.imagem.get_rect()  # perguntar ao miranda a estrutura desse codigo
+        retangulo = imagem_rotacionada.get_rect()
+        # eu uso o topleft para desenhar o retangulo, eu uso o centro para rotacionar o retangulo
+        window.blit(imagem_rotacionada, (self.posição_x - self.imagem.get_width()/2,self.posição_y  - self.imagem.get_height()))
 
-            # para fazer a colisao, vamos utilizar o mask. O mask quebra a imagem do passaro, a qual eh um retangulo, em varios mini-retangulos, tipo pixels, e verificar se existe a presenca do passaro e da torre ao mesmo tempo, indicando a colisao.
-            # mask is a perfect collision detection
-            # Voce pega a mascara da bola e a mascara da torra e avalia. Se eles tem pixel em comum, significa que colidiu. Caso contrario, nao colidiu 
-            pygame.mask.from_surface(self.imagem)
+        # para fazer a colisao, vamos utilizar o mask. O mask quebra a imagem do passaro, a qual eh um retangulo, em varios mini-retangulos, tipo pixels, e verificar se existe a presenca do passaro e da torre ao mesmo tempo, indicando a colisao.
+        # mask is a perfect collision detection
+        # Voce pega a mascara da bola e a mascara da torra e avalia. Se eles tem pixel em comum, significa que colidiu. Caso contrario, nao colidiu 
+        pygame.mask.from_surface(self.imagem)
             
         # sempre que voce quiser desenhar um objeto rotacionado dentro da tela, voce faz esse processo aqui:    
         # se ele nao tiver todo virado pra cima, ele vai ficar todo virado pra cima, aka rotacao maxima
@@ -103,7 +103,7 @@ class Torre:
     def estado(self):
         self.x+= self.velocidade
 
-    def desenha_torre(self,window):
+    def desenha(self,window):
         window.blit (self.torre_cima, (self.x, self.parte_de_cima))
         window.blit (self.torre_baixo, (self.x, self.parte_de_baixo ))
 
