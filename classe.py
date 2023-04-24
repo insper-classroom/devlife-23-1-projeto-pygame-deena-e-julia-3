@@ -6,7 +6,8 @@ imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.
 imagem_torre = pygame.image.load(os.path.join('fotos','torres_arrumadas.png'))
 
 state = {
-    't0': 0
+    't0': 0,
+    't':0
 }
 #para conseguirmos fazer essa classe usamos como base o video https://www.youtube.com/watch?v=gomDSZaay3E e https://www.youtube.com/watch?v=WSPstecsF90.
 class Pomo_de_ouro_classico:
@@ -14,7 +15,7 @@ class Pomo_de_ouro_classico:
     def __init__(self,posição_x,posição_y):
         self.posição_x = posição_x#posição do pomo x
         self.posição_y = posição_y#altura do pomo 
-        self.velocidade = 0#a velocidade que ele se encontra 
+        self.velocidade_y = 0#a velocidade que ele se encontra 
         self.angulo = 0# o angulo dele para sabermos o angulo que ele ira voar
         self.altura = self.posição_y
         self.tempo = 0
@@ -22,7 +23,7 @@ class Pomo_de_ouro_classico:
         self.rotacao_maxima = 25
         self.velocidade_rotacao = 20
         self.angulo = 0
-        self.gravidade = 9.8
+        self.gravidade = 350
 
     def voar(self): # o pomo so desloca no eixo y, ou vai para cim ou para baixo
         self.velocidade=-10#quando ele voar a velocidade precisa estar negativa para que ele não caia e sim cima
@@ -38,18 +39,21 @@ class Pomo_de_ouro_classico:
         # o angulo e respectivo a posicao que a poma vai cair
         # self.tempo += 1
         # deslocamento = self.tempo * self.velocidade + 2 * (self.tempo**2)/2#formula para descobrir o estado do pomo ultizando o s=so+v.t+a.t**2/2
-        self.velocidade_y = self.velocidade - self.gravidade * calculo
+        self.velocidade_y += self.gravidade * calculo
         self.posição_y += self.velocidade_y * calculo
-        
-        # if estado < 20:
+        # self.velocidade += self.gravidade 
+        # self.posição_y += self.velocidade
+        # # if estado < 20:
         #limitando o tamanho do deslocamento pra 20 pixel de altura 
         #o passaro não muda de posição x ja que o movimento do passaro deve ser de cima para baixo logo quando isso acontesse a unica unidade modificada é o y. Assim, temos que pegar o ponto y e somar com o deslocamento (estado) dele.
-
-        if self.posição_y < 0:
-            self.posição_y = 0
-        if self.posição_y > 420 + self.imagem.get_height():
-            self.posição_y = 420 - self.imagem.get_height()
-
+        if self.posição_y < self.imagem.get_height() / 2:
+            self.posição_y = self.imagem.get_height() / 2
+            self.velocidade_y = -self.velocidade_y
+        if self.posição_y + self.imagem.get_height() / 2 > 420:
+            self.posição_y = 420 - self.imagem.get_height() / 2
+            self.velocidade_y = 0
+        
+        
 
 
     def desenha(self, window):
@@ -58,7 +62,7 @@ class Pomo_de_ouro_classico:
         centro_imagem = self.imagem.get_rect()  # perguntar ao miranda a estrutura desse codigo
         retangulo = imagem_rotacionada.get_rect()
         # eu uso o topleft para desenhar o retangulo, eu uso o centro para rotacionar o retangulo
-        window.blit(imagem_rotacionada, (self.posição_x - self.imagem.get_width()/2,self.posição_y  - self.imagem.get_height()))
+        window.blit(imagem_rotacionada, (self.posição_x - self.imagem.get_width()/2,self.posição_y  - self.imagem.get_height() / 2))
 
         # para fazer a colisao, vamos utilizar o mask. O mask quebra a imagem do passaro, a qual eh um retangulo, em varios mini-retangulos, tipo pixels, e verificar se existe a presenca do passaro e da torre ao mesmo tempo, indicando a colisao.
         # mask is a perfect collision detection
@@ -92,7 +96,11 @@ class Torre:
         self.parte_de_baixo= self.altura + self.distancia_entre_torres
 
     def estado(self):
-        self.x+= self.velocidade
+        t0 = state['t']
+        t1 = pygame.time.get_ticks()
+        calculo = (t1-t0)/1000
+        state['t'] = t1
+        self.x+= self.velocidade*calculo
 
     def desenha(self,window):
         window.blit (self.torre_cima, (self.x, self.parte_de_cima))
