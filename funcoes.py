@@ -32,8 +32,8 @@ def atualiza_estado():
 def desenha(window,assets,pomo,torre):
     window.fill((255,255, 255))
     window.blit(assets['imagem_fundo'],(0,0))
-    window.blit(pomo)
-    window.blit(torre)
+    pomo.desenha()
+    torre.desenha()
     pygame.display.update()
     return window, assets,pomo, torre
 
