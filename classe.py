@@ -1,4 +1,4 @@
-from funcoes import *
+import os
 import pygame 
 import random
 
@@ -12,7 +12,7 @@ class Pomo_de_ouro_classico:
         self.posição_y = posição_y#altura do pomo 
         self.velocidade = 0#a velocidade que ele se encontra 
         self.angulo = 0# o angulo dele para sabermos o angulo que ele ira voar
-        self.altura = self.y 
+        self.altura = self.posição_y
         self.tempo = 0
         self.imagem = imagem_pomoouro
         self.rotacao_maxima = 25
