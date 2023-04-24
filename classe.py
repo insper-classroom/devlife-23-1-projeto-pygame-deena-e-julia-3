@@ -63,12 +63,39 @@ class Pomo_de_ouro_classico:
         # se ele nao tiver todo virado pra cima, ele vai ficar todo virado pra cima, aka rotacao maxima
         # self.altura = e a altura do pomo desde a ultima vez que ele pulou
 
+
+    # a torre nao tem aceleracao porque ela so vai se movimentar na horizontal. Nao sera como uma parabula. Qualquer obejto que voce queira que tenha movimentacao como uma parabula, ele tera a forca da gravidade interferindo na velocidade do eixo y.
+   
+    # para ter a torre em cima e embaixo, pasta flipar a imagem. if segundo argument for True, voce vai flipa-la na horizontal. If true o third argument, voce o flipa na vertical.
 class Torre:
+
     distancia_entre_torres=150
     velocidade=5
     def __init__(self, posicao_x):
         self.x=posicao_x
-        self.altura=0 
+        self.altura=0
         self.parte_de_cima=0#da torre
         self.parte_de_baixo=0#da torre
-        #self.imagem =
+        self.torre_cima= imagem_torre
+        self.torre_baixo= imagem_torre
+        self.definir_altura()
+
+    def definir_altura(self):
+        self.altura=random.randint(50, 370)
+        self.parte_de_cima= self.altura - self.torre_cima
+        self.parte_de_baixo= self.altura + self.distancia_entre_torres
+
+    def estado(self):
+        self.x+= self.velocidade
+
+    def desenha_torre(self,window):
+        window.blit (self.torre_cima, (self.x, self.parte_de_cima))
+        window.blit (self.torre_baixo, (self.x, self.parte_de_baixo ))
+
+    def colidir(self,pomo):
+        pomo_mask= pomo.get_mask()
+        torre_cima_mask=pygame.mask.from_surface(self.torre_cima)
+        torre_baixo_mask= pygame.mask.from_surface(self.torre_baixo)        
+
+class Torre_movimento:
+    pass
