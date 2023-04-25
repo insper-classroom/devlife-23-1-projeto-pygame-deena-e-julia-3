@@ -13,13 +13,17 @@ def inicializa():
     imagem_torre = pygame.image.load(os.path.join('fotos', 'torres_arrumadas.png'))
     pomo=Pomo_de_ouro_classico(175,210)
     torres=[Torre(350)]
-
+    fonte_padrao = pygame.font.get_default_font()
+    fonte = pygame.font.Font(fonte_padrao, 16)
 
     assets={
         'imagem_fundo':imagem_fundo,
         'pomo_de_ouro':imagem_pomoouro,
         'brazão':imagem_casas,
-        'torre': imagem_torre
+        'torre': imagem_torre,
+        'ponto': 0,
+        'fonte_ponto': fonte,
+        'maior_pontuação':0
     }
     return window,assets, pomo, torres
 
@@ -40,15 +44,22 @@ def desenha(window,assets,pomo,torres):
     window.fill((255,255, 255))
     window.blit(assets['imagem_fundo'],(0,0))
     pomo.desenha(window)
+    texto = assets['fonte_ponto'].render(str(assets['ponto']), True,(255,255,255))
+    
     for torre in torres:
         torre.desenha(window)
         torre.estado()
-
+        if torre.x < -50:
+            assets['ponto']+=1
+            if assets['ponto']> assets['maior_pontuação']:
+                assets['maior_pontuação']= assets['ponto']
     for torre in torres:
         if (torre.x <= -50):
             torres.append(Torre(350))
             torres.remove(torre)
+    window.blit(texto, (167,30))
         
+    
 
     pygame.display.update()
     return window, assets,pomo, torres

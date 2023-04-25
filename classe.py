@@ -4,7 +4,7 @@ import random
 
 imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
 imagem_torre = pygame.image.load(os.path.join('fotos','torres_arrumadas.png'))
-imagem_torre_nova=pygame.transform.scale(imagem_torre,(50,300))
+imagem_torre_nova=pygame.transform.scale(imagem_torre,(50,400))
 
 state = {
     't0': 0,
@@ -89,7 +89,7 @@ class Torre:
         self.definir_altura()
 
     def definir_altura(self):
-        self.altura=random.randint(50,370 )
+        self.altura=random.randint(50 ,260 )
         self.parte_de_cima= self.altura - self.torre_cima.get_height()
         self.parte_de_baixo= self.altura + self.distancia_entre_torres
 
