@@ -113,10 +113,10 @@ class Torre:
         colisao1 = pygame.sprite.collidemask(pomo_mask, torre_baixo_mask)     
         colisao2 = pygame.sprite.collidemask(pomo_mask, torre_cima_mask)
 
-        if colisao1 != None:
-            # vai para a tela game over
-        if colisao2 != None:
-            # vai para a tela game over 
+        # if colisao1 != None:
+        #     # vai para a tela game over
+        # if colisao2 != None:
+        #     # vai para a tela game over 
 
 class Torre_movimento:
     pass
