@@ -7,19 +7,23 @@ def inicializa():
     window = pygame.display.set_mode((350, 420))
     pygame.display.set_caption("GoldenFly")
 
-    imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
-    imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
-    imagem_casas = pygame.image.load(os.path.join('fotos','casas.png'))
-    imagem_torre = pygame.image.load(os.path.join('fotos', 'torres_arrumadas.png'))
-    pomo=Pomo_de_ouro_classico(175,210)
-    torres=[Torre(350)]
+    # imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
+    # imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
+    # imagem_casas = pygame.image.load(os.path.join('fotos','casas.png'))
+    # imagem_torre = pygame.image.load(os.path.join('fotos', 'torres_arrumadas.png'))
+    # imagem_tela_inicial = pygame.image.load(os.path.join('fotos','imagem_inicial.jpg' ))
+    # imagem_tela_inicial_nova = pygame.transform.scale(imagem_tela_inicial, (350, 420))
+
+    pomo= Pomo_de_ouro_classico(175,210)
+    torres= [Torre(350)]
 
 
     assets={
-        'imagem_fundo':imagem_fundo,
-        'pomo_de_ouro':imagem_pomoouro,
-        'brazão':imagem_casas,
-        'torre': imagem_torre
+        # 'imagem_fundo':imagem_fundo,
+        # 'pomo_de_ouro':imagem_pomoouro,
+        # 'brazão':imagem_casas,
+        # 'torre': imagem_torre,
+        # 'tela_inicial': imagem_tela_inicial_nova
     }
     return window,assets, pomo, torres
 
@@ -54,5 +58,17 @@ def desenha(window,assets,pomo,torres):
     return window, assets,pomo, torres
 
 def game_loop(window,assets,pomo,torre):
-    while atualiza_estado(torre, pomo):
-        desenha(window,assets,pomo,torre)
+    telas = [Tela_inicio(), OutraTela()]
+    tela = telas[0]
+    game = True
+    while game:
+        indice_proxima_tela = tela.atualiza_estado()
+        if indice_proxima_tela == -1:
+            game = False
+        else:
+            tela = telas[indice_proxima_tela]
+            tela.desenha(window)
+            pygame.display.update()
+            pygame.time.Clock().tick(30)
+    # while atualiza_estado(torre, pomo):
+    #     desenha(window,assets,pomo,torre)

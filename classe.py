@@ -6,8 +6,10 @@ imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.
 imagem_torre = pygame.image.load(os.path.join('fotos','torres_arrumadas.png'))
 imagem_torre_nova=pygame.transform.scale(imagem_torre,(50,300))
 
+
+
 state = {
-    't0': 0,
+    't0': 0,    
     't':0
 }
 #para conseguirmos fazer essa classe usamos como base o video https://www.youtube.com/watch?v=gomDSZaay3E e https://www.youtube.com/watch?v=WSPstecsF90.
@@ -74,11 +76,6 @@ class Pomo_de_ouro_classico:
    
     # para ter a torre em cima e embaixo, pasta flipar a imagem. if segundo argument for True, voce vai flipa-la na horizontal. If true o third argument, voce o flipa na vertical.
 class Torre:
-
-    distancia_entre_torres=140
-    velocidade=300
-
-
     def __init__(self, posicao_x):
         self.x=posicao_x
         self.altura=0
@@ -86,6 +83,8 @@ class Torre:
         self.parte_de_baixo=0#da torre
         self.torre_cima= imagem_torre_nova
         self.torre_baixo= imagem_torre_nova
+        self.distancia_entre_torres=140
+        self.velocidade=300
         self.definir_altura()
 
     def definir_altura(self):
@@ -120,3 +119,48 @@ class Torre:
 
 class Torre_movimento:
     pass
+
+class OutraTela:
+    def __init__(self):
+        self.cor = (255, 0, 0)
+    
+    def desenha(self, window):
+        window.fill(self.cor)
+
+    def atualiza_estado(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return -1
+
+        return 1
+
+class Tela_inicio:
+    def __init__(self):
+
+        imagem_tela_inicial = pygame.image.load(os.path.join('fotos','imagem_inicial.jpg' ))
+        self.imagem_tela_inicial_nova = pygame.transform.scale(imagem_tela_inicial, (350, 420))
+        fonte_padrao = pygame.font.get_default_font()
+        self.fonte = pygame.font.Font(fonte_padrao, 30)
+
+    def desenha(self, window):
+
+        window.blit(self.imagem_tela_inicial_nova, (0, 0))
+
+        caixa_texto = pygame.Rect(124, 280, 100, 33)
+        pygame.draw.rect(window, (255,255,255), caixa_texto)
+        texto_jogar = self.fonte.render('Jogar', True, (0,0,0))
+        window.blit(texto_jogar, (130,282))
+    
+    def atualiza_estado(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return -1
+            if event.type == pygame.KEYDOWN:
+                return 1
+
+        return 0
+    # def colisao_com_ponto():
+    
+    # def 
+
+        
