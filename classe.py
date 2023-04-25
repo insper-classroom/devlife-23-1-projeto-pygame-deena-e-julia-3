@@ -4,6 +4,7 @@ import random
 
 imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
 imagem_torre = pygame.image.load(os.path.join('fotos','torres_arrumadas.png'))
+imagem_torre_nova=pygame.transform.scale(imagem_torre,(50,300))
 
 state = {
     't0': 0,
@@ -23,12 +24,7 @@ class Pomo_de_ouro_classico:
         self.rotacao_maxima = 25
         self.velocidade_rotacao = 20
         self.angulo = 0
-        self.gravidade = 350
-
-    def voar(self): # o pomo so desloca no eixo y, ou vai para cim ou para baixo
-        self.velocidade=-10#quando ele voar a velocidade precisa estar negativa para que ele não caia e sim cima
-        self.tempo=0# tempo inicial do deslocamento
-        self.altura= self.posição_y# a altura atual do pomo de ouro
+        self.gravidade = 500
 
     def movimento(self):
 
@@ -79,37 +75,48 @@ class Pomo_de_ouro_classico:
     # para ter a torre em cima e embaixo, pasta flipar a imagem. if segundo argument for True, voce vai flipa-la na horizontal. If true o third argument, voce o flipa na vertical.
 class Torre:
 
-    distancia_entre_torres=100
-    velocidade=5
+    distancia_entre_torres=140
+    velocidade=300
+
+
     def __init__(self, posicao_x):
         self.x=posicao_x
         self.altura=0
         self.parte_de_cima=0#da torre
         self.parte_de_baixo=0#da torre
-        self.torre_cima= imagem_torre
-        self.torre_baixo= imagem_torre
+        self.torre_cima= imagem_torre_nova
+        self.torre_baixo= imagem_torre_nova
         self.definir_altura()
 
     def definir_altura(self):
         self.altura=random.randint(50, 370)
-        self.parte_de_cima= self.altura - self.torre_cima.get_height()
-        self.parte_de_baixo= self.altura + self.distancia_entre_torres
+        self.parte_de_baixo= self.altura - self.torre_cima.get_height()
+        self.parte_de_cima= self.altura + self.distancia_entre_torres
 
     def estado(self):
         t0 = state['t']
         t1 = pygame.time.get_ticks()
         calculo = (t1-t0)/1000
         state['t'] = t1
-        self.x+= self.velocidade*calculo
+        self.x-= self.velocidade*calculo
 
     def desenha(self,window):
         window.blit (self.torre_cima, (self.x, self.parte_de_cima))
         window.blit (self.torre_baixo, (self.x, self.parte_de_baixo ))
 
     def colidir(self,pomo):
-        pomo_mask= pomo.get_mask()
+        # pomo_mask= pomo.get_mask()
+        pomo_mask = pygame.mask.from_surface(self.imagem)
         torre_cima_mask=pygame.mask.from_surface(self.torre_cima)
-        torre_baixo_mask= pygame.mask.from_surface(self.torre_baixo)        
+        torre_baixo_mask= pygame.mask.from_surface(self.torre_baixo)
+
+        colisao1 = pygame.sprite.collidemask(pomo_mask, torre_baixo_mask)     
+        colisao2 = pygame.sprite.collidemask(pomo_mask, torre_cima_mask)
+
+        if colisao1 != None:
+            # vai para a tela game over
+        if colisao2 != None:
+            # vai para a tela game over 
 
 class Torre_movimento:
     pass
