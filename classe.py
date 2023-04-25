@@ -89,9 +89,9 @@ class Torre:
         self.definir_altura()
 
     def definir_altura(self):
-        self.altura=random.randint(50, 370)
-        self.parte_de_baixo= self.altura - self.torre_cima.get_height()
-        self.parte_de_cima= self.altura + self.distancia_entre_torres
+        self.altura=random.randint(50,370 )
+        self.parte_de_cima= self.altura - self.torre_cima.get_height()
+        self.parte_de_baixo= self.altura + self.distancia_entre_torres
 
     def estado(self):
         t0 = state['t']
