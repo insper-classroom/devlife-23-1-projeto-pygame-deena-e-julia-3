@@ -150,22 +150,34 @@ class Tela_inicio:
     def desenha(self, window):
 
         window.blit(self.imagem_tela_inicial_nova, (0, 0))
-
-        caixa_texto = pygame.Rect(124, 280, 100, 33)
+        self.caixa_x = 124
+        self.caixa_y = 280
+        self.caixa_width = 100
+        self.caixa_height = 33
+        caixa_texto = pygame.Rect(self.caixa_x , self.caixa_y , self.caixa_width, self.caixa_height)
         pygame.draw.rect(window, (255,255,255), caixa_texto)
         texto_jogar = self.fonte.render('Jogar', True, (0,0,0))
-        window.blit(texto_jogar, (130,282))
+        window.blit(texto_jogar, (131,282))
+    
+    
+
+    def colisao_coordenada_rect(self, coordenada_x, coordenada_y):
+        self.pos_x = coordenada_x
+        self.pos_y = coordenada_y
+        if self.caixa_x <= self.pos_x and self.pos_x <= self.caixa_x + self.caixa_width and self.caixa_y <= self.pos_y and self.pos_y <= self.caixa_y + self.caixa_height:
+            return True
+        return False
+
     
     def atualiza_estado(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return -1
-            if event.type == pygame.KEYDOWN:
-                return 1
-
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.mouse.get_pos()
+                if self.colisao_coordenada_rect(event.pos[0], event.pos[1]):
+                    return 1
         return 0
-    # def colisao_com_ponto():
     
-    # def 
 
         
