@@ -10,7 +10,7 @@ state = {
     't0': 0,
     't':0
 }
-#para conseguirmos fazer essa classe usamos como base o video https://www.youtube.com/watch?v=gomDSZaay3E e https://www.youtube.com/watch?v=WSPstecsF90.
+
 class Pomo_de_ouro_classico:
 
     def __init__(self,posição_x,posição_y):
@@ -25,6 +25,10 @@ class Pomo_de_ouro_classico:
         self.velocidade_rotacao = 20
         self.angulo = 0
         self.gravidade = 500
+        self.rect = self.imagem.get_rect()
+        self.rect.x = self.posição_x
+        self.rect.y = self.posição_y
+
 
     def movimento(self):
 
@@ -32,22 +36,15 @@ class Pomo_de_ouro_classico:
         t1 = pygame.time.get_ticks()
         calculo = (t1-t0)/1000
         state['t0'] = t1
-        # o angulo e respectivo a posicao que a poma vai cair
-        # self.tempo += 1
-        # deslocamento = self.tempo * self.velocidade + 2 * (self.tempo**2)/2#formula para descobrir o estado do pomo ultizando o s=so+v.t+a.t**2/2
         self.velocidade_y += self.gravidade * calculo
         self.posição_y += self.velocidade_y * calculo
-        # self.velocidade += self.gravidade 
-        # self.posição_y += self.velocidade
-        # # if estado < 20:
-        #limitando o tamanho do deslocamento pra 20 pixel de altura 
-        #o passaro não muda de posição x ja que o movimento do passaro deve ser de cima para baixo logo quando isso acontesse a unica unidade modificada é o y. Assim, temos que pegar o ponto y e somar com o deslocamento (estado) dele.
         if self.posição_y < self.imagem.get_height() / 2:
             self.posição_y = self.imagem.get_height() / 2
             self.velocidade_y = -self.velocidade_y
         if self.posição_y + self.imagem.get_height() / 2 > 420:
             self.posição_y = 420 - self.imagem.get_height() / 2
             self.velocidade_y = 0
+        self.rect.y=self.posição_y
         
         
 
@@ -58,7 +55,7 @@ class Pomo_de_ouro_classico:
         centro_imagem = self.imagem.get_rect()  # perguntar ao miranda a estrutura desse codigo
         retangulo = imagem_rotacionada.get_rect()
         # eu uso o topleft para desenhar o retangulo, eu uso o centro para rotacionar o retangulo
-        window.blit(imagem_rotacionada, (self.posição_x - self.imagem.get_width()/2,self.posição_y  - self.imagem.get_height() / 2))
+        window.blit(imagem_rotacionada, (self.posição_x,self.posição_y))
 
         # para fazer a colisao, vamos utilizar o mask. O mask quebra a imagem do passaro, a qual eh um retangulo, em varios mini-retangulos, tipo pixels, e verificar se existe a presenca do passaro e da torre ao mesmo tempo, indicando a colisao.
         # mask is a perfect collision detection
@@ -76,7 +73,7 @@ class Pomo_de_ouro_classico:
 class Torre:
 
     distancia_entre_torres=140
-    velocidade=300
+    velocidade=200
 
 
     def __init__(self, posicao_x):
@@ -86,37 +83,40 @@ class Torre:
         self.parte_de_baixo=0#da torre
         self.torre_cima= imagem_torre_nova
         self.torre_baixo= imagem_torre_nova
+        self.rect1 = self.torre_cima.get_rect()
+        self.rect1.x = self.x
+        self.rect1.y = self.parte_de_cima
+        self.rect2 = self.torre_baixo.get_rect()
+        self.rect2.x = self.x
+        self.rect2.y = self.parte_de_baixo
         self.definir_altura()
 
     def definir_altura(self):
-        self.altura=random.randint(50 ,260 )
+        self.altura=random.randint(50 ,260)
         self.parte_de_cima= self.altura - self.torre_cima.get_height()
         self.parte_de_baixo= self.altura + self.distancia_entre_torres
+        self.rect1.y = self.parte_de_cima
+        self.rect2.y = self.parte_de_baixo
 
     def estado(self):
         t0 = state['t']
         t1 = pygame.time.get_ticks()
+        tempo=pygame.time.get_ticks()/1000
         calculo = (t1-t0)/1000
         state['t'] = t1
         self.x-= self.velocidade*calculo
+        self.rect1.x = self.x
+        self.rect2.x = self.x
+        if tempo==10:
+            self.velocidade+=1000
+            tempo=pygame.time.get_ticks()
 
     def desenha(self,window):
         window.blit (self.torre_cima, (self.x, self.parte_de_cima))
         window.blit (self.torre_baixo, (self.x, self.parte_de_baixo ))
 
-    def colidir(self,pomo):
-        # pomo_mask= pomo.get_mask()
-        pomo_mask = pygame.mask.from_surface(self.imagem)
-        torre_cima_mask=pygame.mask.from_surface(self.torre_cima)
-        torre_baixo_mask= pygame.mask.from_surface(self.torre_baixo)
-
-        colisao1 = pygame.sprite.collidemask(pomo_mask, torre_baixo_mask)     
-        colisao2 = pygame.sprite.collidemask(pomo_mask, torre_cima_mask)
-
-        # if colisao1 != None:
-        #     # vai para a tela game over
-        # if colisao2 != None:
-        #     # vai para a tela game over 
-
+    def colidir(self,pomo_rect):
+        return self.rect1.colliderect(pomo_rect) or self.rect2.colliderect(pomo_rect)
+    
 class Torre_movimento:
     pass

@@ -11,8 +11,10 @@ def inicializa():
     imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
     imagem_casas = pygame.image.load(os.path.join('fotos','casas.png'))
     imagem_torre = pygame.image.load(os.path.join('fotos', 'torres_arrumadas.png'))
-    pomo=Pomo_de_ouro_classico(175,210)
+    pomo=Pomo_de_ouro_classico(100,210)
     torres=[Torre(350)]
+    musica_fundo = pygame.mixer.music.load('musica/musica harry potter.mp3')#para tocar a musica de fundo 
+    pygame.mixer.music.play()
     fonte_padrao = pygame.font.get_default_font()
     fonte = pygame.font.Font(fonte_padrao, 16)
 
@@ -37,6 +39,9 @@ def atualiza_estado(torres, pomo):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 pomo.velocidade_y = -300
+    for torre in torres:
+        if torre.colidir(pomo.rect):
+            game= False
         
     return game
 
