@@ -78,7 +78,7 @@ def desenha(window,assets,pomo,torres):
                 assets['maior_pontuação']= assets['ponto']
     for torre in torres:
         if (torre.x <= -50):
-            torres.append(Torre(350))
+            torres.append(Tela_jogo.Torre(350))
             torres.remove(torre)
     window.blit(texto, (167,30))
         
@@ -88,7 +88,7 @@ def desenha(window,assets,pomo,torres):
     return window, assets,pomo, torres
 
 def game_loop(window,assets,pomo,torre):
-    telas = [Tela_inicio(), OutraTela()]
+    telas = [Tela_inicio(), Tela_Instrucao(Tela_jogo.Pomo_de_ouro_classico()), Tela_jogo(), Tela_Game_Over()]
     tela = telas[0]
     game = True
     while game:
