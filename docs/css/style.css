@@ -16,15 +16,20 @@ body{
     background-image: url("potter\ pixelado.gif");
     background-size: 1500px 600px;
     background-repeat: no-repeat;
-    height: 100%;
+    height: 30%;
     width: 101%;
     width: 100%;
    
 }
-/* 
+
 .titulo {
-    text-align: center;
-} */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 8%;
+    font-size: 38px;
+    
+}
 
 .sobre{
     background-position: top;
@@ -85,11 +90,54 @@ body{
     background-color: (236, 236, 194);
     padding-left: 20px;
     padding-top: 0px;
-    padding-bottom: 0px;
+    padding-bottom: 20px;  
+    /*  arrumar o padding aqui, quero que a tabela fique cm a msm distancia do box que os outros textos das outras tabelas possuem  */
     padding-right: 20px;
 
 }
 
+.telas {
+    background-position: top;
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 150px;
+    margin-left: 150px;
+    background-color: (236, 236, 194);
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 18px;
+    padding-right: 20px;
+
+}
+
+.heurísticas{
+    background-position: top;
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 150px;
+    margin-left: 150px;
+    background-color: (236, 236, 194);
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 18px;
+    padding-right: 20px;
+}
+table {
+    width:100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 3px solid #ccc;
+    /* padding-bottom: 10px; */
+
+}
 .link{
     background-position: top;
     background-color: white;
