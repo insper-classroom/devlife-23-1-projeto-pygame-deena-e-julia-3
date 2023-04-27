@@ -14,8 +14,8 @@ def inicializa():
     imagem_tela_inicial = pygame.image.load(os.path.join('fotos','imagem_inicial.jpg' ))
     imagem_tela_inicial_nova = pygame.transform.scale(imagem_tela_inicial, (350, 420))
 
-    pomo = Pomo(175,210)
-    torres = [Torre(350)]
+    pomo = Pomo(175,100)
+    torres = [Torre(350, pomo)]
     
     # pomo=Pomo_de_ouro_classico(100,210)
     musica_fundo = pygame.mixer.music.load('musica/musica harry potter.mp3')#para tocar a musica de fundo 
@@ -65,7 +65,7 @@ def desenha(window,assets,pomo,torres):
                 assets['maior_pontuação']= assets['ponto']
     for torre in torres:
         if (torre.x <= -50):
-            torres.append(Tela_jogo.Torre(350))
+            torres.append(Tela_jogo.Torre(350, pomo))
             torres.remove(torre)
     window.blit(texto, (167,30))
 
@@ -78,7 +78,7 @@ def game_loop(window,assets,pomo,torre):
     game = True
     while game:
         indice_proxima_tela = tela.atualiza_estado()
-        print(indice_proxima_tela)
+        #print(indice_proxima_tela)
         if indice_proxima_tela == -1:
             game = False
         else:
