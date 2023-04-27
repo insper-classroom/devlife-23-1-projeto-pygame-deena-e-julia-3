@@ -1,18 +1,110 @@
 body{
-    background-color: rgb(255, 255, 255);
+    background-color:rgb(236, 236, 194);
     display: flex;
     justify-content: center;
     /* background-image: url("https://github.com/insper-classroom/devlife-23-1-projeto-pygame-deena-e-julia-3/blob/main/docs/fundo%20site%20done.png?raw=true"); */
-    background-image: url("potter\ pixelado.gif");
+    /* background-image: url("potter\ pixelado.gif"); */
     background-repeat: no-repeat;
-    background-size: cover;
     font-family: sans-serif;
+    height: 0%;
 
     /* background-size: 4rem; */
     
 }
 
+.pagina1{
+    background-image: url("potter\ pixelado.gif");
+    background-size: 1500px 600px;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 101%;
+    width: 100%;
+   
+}
+/* 
+.titulo {
+    text-align: center;
+} */
 
+.sobre{
+    background-position: top;
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 150px;
+    margin-left: 150px;
+    background-color: (236, 236, 194);
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 20px;
+
+
+}
+
+.instrucoes{
+    background-position: top;
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 150px;
+    margin-left: 150px;
+    background-color: (236, 236, 194);
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 20px;
+
+}
+
+.nomes{
+    background-position: top;
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 150px;
+    margin-left: 150px;
+    background-color: (236, 236, 194);
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 20px;
+
+}
+.log{
+    background-position: top;
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 150px;
+    margin-left: 150px;
+    background-color: (236, 236, 194);
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 20px;
+
+}
+
+.link{
+    background-position: top;
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 150px;
+    margin-left: 150px;
+    background-color: (236, 236, 194);
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 18px;
+    padding-right: 20px;
+
+}
 h1 {
     text-align: center;
     font-family: sans-serif;
@@ -34,10 +126,16 @@ footer {
 }
 
 .content {
-    width: 60%;
-    max-width: 800px;
-    background-color: rgb(236, 236, 194);
-    padding-left: 1rem;
+    width: 100%;
+    height: 80px;
+    /* max-width: 800px; */
+    background-color:rgb(236, 236, 194);
+    /* padding-left: 1rem; */
+    align-items: left;
+    display: flex;
 
+}
 
+.linha {
+    background-color: white;
 }
