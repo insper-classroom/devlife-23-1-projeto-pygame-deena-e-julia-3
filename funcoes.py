@@ -1,4 +1,4 @@
-from classe import*
+from classe import *
 import pygame
 import os 
 def inicializa():
@@ -14,23 +14,10 @@ def inicializa():
     imagem_tela_inicial = pygame.image.load(os.path.join('fotos','imagem_inicial.jpg' ))
     imagem_tela_inicial_nova = pygame.transform.scale(imagem_tela_inicial, (350, 420))
 
-    pomo= Pomo_de_ouro_classico(175,210)
-    torres= [Torre(350)]
-
-
-    assets={
-        'imagem_fundo':imagem_fundo,
-        'pomo_de_ouro':imagem_pomoouro,
-        'brazão':imagem_casas,
-        'torre': imagem_torre,
-        'tela_inicial': imagem_tela_inicial_nova
-        }
-    imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
-    imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
-    imagem_casas = pygame.image.load(os.path.join('fotos','casas.png'))
-    imagem_torre = pygame.image.load(os.path.join('fotos', 'torres_arrumadas.png'))
-    pomo=Pomo_de_ouro_classico(100,210)
-    torres=[Torre(350)]
+    pomo = Pomo(175,210)
+    torres = [Torre(350)]
+    
+    # pomo=Pomo_de_ouro_classico(100,210)
     musica_fundo = pygame.mixer.music.load('musica/musica harry potter.mp3')#para tocar a musica de fundo 
     pygame.mixer.music.play()
     fonte_padrao = pygame.font.get_default_font()
@@ -41,6 +28,7 @@ def inicializa():
         'pomo_de_ouro':imagem_pomoouro,
         'brazão':imagem_casas,
         'torre': imagem_torre,
+        'tela_inicial': imagem_tela_inicial_nova,
         'ponto': 0,
         'fonte_ponto': fonte,
         'maior_pontuação':0
@@ -48,9 +36,8 @@ def inicializa():
     return window,assets, pomo, torres
 
 def atualiza_estado(torres, pomo):
-    pygame.time.Clock().tick(30)
     game=True
-    pomo.movimento()
+    pomo.atualiza_estado()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game =False
@@ -81,24 +68,23 @@ def desenha(window,assets,pomo,torres):
             torres.append(Tela_jogo.Torre(350))
             torres.remove(torre)
     window.blit(texto, (167,30))
-        
-    
 
     pygame.display.update()
     return window, assets,pomo, torres
 
 def game_loop(window,assets,pomo,torre):
-    telas = [Tela_inicio(), Tela_Instrucao(Tela_jogo.Pomo_de_ouro_classico()), Tela_jogo(), Tela_Game_Over()]
+    telas = [Tela_inicio(), Tela_Instrucao(), Tela_jogo(), Tela_Game_Over()]
     tela = telas[0]
     game = True
     while game:
         indice_proxima_tela = tela.atualiza_estado()
+        print(indice_proxima_tela)
         if indice_proxima_tela == -1:
             game = False
         else:
+            window.fill((0,0,0))
             tela = telas[indice_proxima_tela]
             tela.desenha(window)
             pygame.display.update()
             pygame.time.Clock().tick(30)
-    # while atualiza_estado(torre, pomo):
-    #     desenha(window,assets,pomo,torre)
+   
