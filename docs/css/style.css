@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Mario Kart';
+    src: url('Mario_Kart.ttf') format('truetype');
+}
+
 body{
     background-color:rgb(236, 236, 194);
     display: flex;
@@ -155,7 +160,7 @@ th, td {
 }
 h1 {
     text-align: center;
-    font-family: sans-serif;
+    font-family: 'Mario Kart';
     color: rgb(0, 0, 0);
     /* background-color: white; */
 }
