@@ -47,6 +47,7 @@ class Pomo:
             self.posição_y = 420 - self.imagem.get_height() / 2
             self.velocidade_y = 0
         self.rect.y=self.posição_y
+        print(self.rect)
     
 
     def desenha(self, window):
@@ -143,6 +144,7 @@ class Tela_jogo:
 
     def atualiza_estado(self):
         self.pomo.atualiza_estado()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return -1
@@ -150,9 +152,9 @@ class Tela_jogo:
                 if event.key == pygame.K_SPACE:
                     self.pomo.velocidade_y = -180
                     self.pomo.gravidade = 330
-            for torre in self.torres:
-                if torre.colidir(self.pomo.rect):
-                    return 3
+        for torre in self.torres:
+            if torre.colidir(self.pomo.rect):
+                return 3
         return 2
 
 
