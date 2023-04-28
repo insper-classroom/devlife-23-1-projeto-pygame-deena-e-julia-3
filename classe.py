@@ -1,13 +1,12 @@
 import os
 import pygame 
 import random
-# import funcoes 
 
 imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
 imagem_torre = pygame.image.load(os.path.join('fotos','torres_arrumadas.png'))
 imagem_torre_nova=pygame.transform.scale(imagem_torre,(50,400))
 imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
-
+# colocar o som de flappy bird
 state = {
     't0': 0,    
     't':0
@@ -108,7 +107,60 @@ class Torre:
         return self.rect1.colliderect(pomo_rect) or self.rect2.colliderect(pomo_rect)
     
 class Tela_Game_Over:
-    pygame.quit()
+    def __init__(self):
+        self.imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
+        self.fonte = pygame.font.Font('fonte/Mario-Kart-DS.ttf',20)
+
+        self.tela_jogo = Tela_jogo()
+        
+        self.caixa_score_x = 80
+        self.caixa_score_y  = 50
+        self.caixa_score_width = 100
+        self.caixa_score_height = 100
+
+        self.caixa_jogar_dnv_x = 100
+        self.caixa_jogar_dnv_y = 200
+        self.caixa_jogar_dnv_width = 70
+        self.caixa_jogar_dnv_height = 50
+
+    def desenha(self, window):
+
+        window.blit(self.imagem_fundo, (0,0))
+
+        self.caixa_score = pygame.Rect(self.caixa_score_x, self.caixa_score_y, self.caixa_score_width, self.caixa_jogar_dnv_height)
+        pygame.draw.rect(window, (255,255,255), self.caixa_score)
+
+        self.texto_score = self.fonte.render('SCORE', True, (0,0,0))
+        self.texto_best = self.fonte.render('BEST', True, (0,0,0))
+        self.texto_numero_score = self.fonte.render(str(self.tela_jogo.ponto), True, (0,0,0))
+        self.texto_recorde = self.fonte.render(str(self.tela_jogo.maior_pontuação), True, (0,0,0))
+
+        window.blit(self.texto_score, (83, 60 ))
+        window.blit(self.texto_score, (100, 60))
+        window.blit(self.texto_numero_score, (83, 80))
+        window.blit(self.texto_recorde, (100, 80))
+
+        self.caixa_restart = pygame.Rect(self.caixa_jogar_dnv_x, self.caixa_jogar_dnv_y, self.caixa_jogar_dnv_y, self.caixa_jogar_dnv_height)
+        pygame.draw.rect(window, (255,255,255), self.caixa_restart)
+
+        self.texto_play_again = self.fonte.render('PLAY AGAIN', True, (0,0,0))
+
+        window.blit(self.texto_play_again, (105, 202))
+
+        
+        
+
+    # def colisao_caixa_jogar_dnv(self):
+    #     pass
+
+    def atualiza_estado(self):
+        pass
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    return 3
+
+
 
 class Tela_jogo:
     def __init__(self):
@@ -121,10 +173,8 @@ class Tela_jogo:
         self.maior_pontuação = 0
         
     def desenha(self, window):
-        # funcoes.desenha(window,self.imagem_fundo,self.pomo,self.torres)
         window.blit(self.imagem_fundo,(0,0))
         self.pomo.desenha(window)
-        # self.torre.desenha(window)
         self.texto = self.fonte.render(str(self.ponto), True,(255,255,255))
 
         for torre in self.torres:
@@ -167,22 +217,19 @@ class Tela_Instrucao:
         self.caixa_y_1 = 100
         self.caixa_width_1 = 260
         self.caixa_height_1 = 38
-        # self.caixa_x_2 = 
-        # self.caixa_y_2 =
-        # self.caixa_width_2 =
-        # self.caixa_height_2 =
+       
 
     def desenha(self, window):
         window.blit(self.imagem_fundo, (0,0))
         self.pomo.desenha(window)
         window.blit(self.pomo.imagem, (175, 210))
 
-        self.texto_instrucoes1 = self.fonte.render('PARA INICIAR O JOGO', True, (0,0,0))
-        self.texto_instrucoes2 = self.fonte.render('CLIQUE NA TECLA SPACE', True, (0,0,0))
+        self.texto_instrucoes1 = self.fonte.render('TO START THE GAME', True, (0,0,0))
+        self.texto_instrucoes2 = self.fonte.render('PRESS SPACE', True, (0,0,0))
         caixa_texto_1 = pygame.Rect(self.caixa_x_1, self.caixa_y_1, self.caixa_width_1, self.caixa_height_1)
         pygame.draw.rect(window, (255,255,255), caixa_texto_1)
-        window.blit(self.texto_instrucoes1, (60,100))
-        window.blit(self.texto_instrucoes2, (40, 120))
+        window.blit(self.texto_instrucoes1, (55,100))
+        window.blit(self.texto_instrucoes2, (50, 120))
 
     def atualiza_estado(self):
         for event in pygame.event.get():
