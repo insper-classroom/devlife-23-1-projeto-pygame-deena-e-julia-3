@@ -102,6 +102,7 @@ body{
 }
 
 .telas {
+    
     background-position: top;
     background-color: white;
     border: 1px solid black;
@@ -191,4 +192,30 @@ footer {
 
 .linha {
     background-color: white;
+}
+footer{
+    background-color: black;
+    color:white
+  }
+frame{
+    text-align: center;
+}
+
+div.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    margin-left: 30%;
+}
+
+div.header:hover {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    scroll-behavior: smooth;
 }
