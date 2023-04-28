@@ -78,7 +78,8 @@ def game_loop(window,assets,pomo,torre):
     game = True
     while game:
         indice_proxima_tela = tela.atualiza_estado()
-        #print(indice_proxima_tela)
+        print(indice_proxima_tela)
+            
         if indice_proxima_tela == -1:
             game = False
         else:

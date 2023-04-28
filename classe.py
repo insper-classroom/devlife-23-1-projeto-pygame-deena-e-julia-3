@@ -104,7 +104,10 @@ class Torre:
 
     def colidir(self,pomo_rect):
         return self.rect1.colliderect(pomo_rect) or self.rect2.colliderect(pomo_rect)
-    
+ponto={
+    'pontuação':0
+}
+
 class Tela_Game_Over:
     def __init__(self):
         self.imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
@@ -114,50 +117,35 @@ class Tela_Game_Over:
         
         self.caixa_score_x = 80
         self.caixa_score_y  = 50
-        self.caixa_score_width = 100
-        self.caixa_score_height = 100
-
-        self.caixa_jogar_dnv_x = 100
-        self.caixa_jogar_dnv_y = 200
-        self.caixa_jogar_dnv_width = 70
-        self.caixa_jogar_dnv_height = 50
+        self.caixa_score_width = 93
+        self.caixa_score_height = 22
 
     def desenha(self, window):
 
         window.blit(self.imagem_fundo, (0,0))
 
-        self.caixa_score = pygame.Rect(self.caixa_score_x, self.caixa_score_y, self.caixa_score_width, self.caixa_jogar_dnv_height)
+        self.caixa_score = pygame.Rect(self.caixa_score_x, self.caixa_score_y, self.caixa_score_width, self.caixa_score_height)
         pygame.draw.rect(window, (255,255,255), self.caixa_score)
 
         self.texto_score = self.fonte.render('SCORE', True, (0,0,0))
-        self.texto_best = self.fonte.render('BEST', True, (0,0,0))
-        self.texto_numero_score = self.fonte.render(str(self.tela_jogo.ponto), True, (0,0,0))
-        self.texto_recorde = self.fonte.render(str(self.tela_jogo.maior_pontuação), True, (0,0,0))
+        self.texto_numero_score = self.fonte.render(str(ponto['pontuação']), True, (0,0,0))
 
-        window.blit(self.texto_score, (83, 60 ))
-        window.blit(self.texto_score, (100, 60))
-        window.blit(self.texto_numero_score, (83, 80))
-        window.blit(self.texto_recorde, (100, 80))
+        window.blit(self.texto_score, (82, 52 ))
+        window.blit(self.texto_numero_score, (158, 52))
 
-        self.caixa_restart = pygame.Rect(self.caixa_jogar_dnv_x, self.caixa_jogar_dnv_y, self.caixa_jogar_dnv_y, self.caixa_jogar_dnv_height)
-        pygame.draw.rect(window, (255,255,255), self.caixa_restart)
-
-        self.texto_play_again = self.fonte.render('PLAY AGAIN', True, (0,0,0))
-
-        window.blit(self.texto_play_again, (105, 202))
-
-        
-        
-
-    # def colisao_caixa_jogar_dnv(self):
-    #     pass
 
     def atualiza_estado(self):
-        pass
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+            if event.type == pygame.QUIT:
+                return -1
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.mouse.get_pos()
+                if self.colisao_caixa_jogar_dnv(event.pos[0], event.pos[1]):
+                    ponto['pontuação']=0
                     return 3
+            
+        return 3
+
 
 
 
@@ -168,21 +156,17 @@ class Tela_jogo:
         self.imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
         fonte_padrao = pygame.font.get_default_font()
         self.fonte = pygame.font.Font(fonte_padrao, 16)
-        self.ponto = 0
-        self.maior_pontuação = 0
         
     def desenha(self, window):
         window.blit(self.imagem_fundo,(0,0))
         self.pomo.desenha(window)
-        self.texto = self.fonte.render(str(self.ponto), True,(255,255,255))
+        self.texto = self.fonte.render(str(ponto['pontuação']), True,(255,255,255))
 
         for torre in self.torres:
             torre.desenha(window)
             torre.atualiza_estado()
             if torre.x < -50:
-                self.ponto+=1
-                if self.ponto> self.maior_pontuação:
-                    self.maior_pontuação= self.ponto
+                ponto['pontuação']+=1
         for torre in self.torres:
             if (torre.x <= -50):
                 self.torres.append(Torre(350))
@@ -212,10 +196,10 @@ class Tela_Instrucao:
         self.imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
         self.pomo = Pomo(120,100)
         self.fonte = pygame.font.Font('fonte/Mario-Kart-DS.ttf',20)
-        self.caixa_x_1 = 39
-        self.caixa_y_1 = 100
-        self.caixa_width_1 = 260
-        self.caixa_height_1 = 38
+        self.caixa_x_1 = 59
+        self.caixa_y_1 = 98
+        self.caixa_width_1 = 220
+        self.caixa_height_1 = 42
        
 
     def desenha(self, window):
@@ -224,11 +208,11 @@ class Tela_Instrucao:
         window.blit(self.pomo.imagem, (120, 210))
 
         self.texto_instrucoes1 = self.fonte.render('TO START THE GAME', True, (0,0,0))
-        self.texto_instrucoes2 = self.fonte.render('PRESS SPACE', True, (0,0,0))
+        self.texto_instrucoes2 = self.fonte.render('PRESS SPACE TWICE', True, (0,0,0))
         caixa_texto_1 = pygame.Rect(self.caixa_x_1, self.caixa_y_1, self.caixa_width_1, self.caixa_height_1)
         pygame.draw.rect(window, (255,255,255), caixa_texto_1)
-        window.blit(self.texto_instrucoes1, (55,100))
-        window.blit(self.texto_instrucoes2, (50, 120))
+        window.blit(self.texto_instrucoes1, (65,100))
+        window.blit(self.texto_instrucoes2, (65, 120))
 
     def atualiza_estado(self):
         for event in pygame.event.get():
@@ -261,12 +245,12 @@ class Tela_inicio:
         window.blit(self.imagem_tela_inicial_nova, (75, 95))
         caixa_texto = pygame.Rect(self.caixa_x_jogo , self.caixa_y_jogo , self.caixa_width_jogo, self.caixa_height_jogo)
         pygame.draw.rect(window, (255,255,255), caixa_texto)
-        texto_jogar = self.fonte.render('JOGAR', True, (0,0,0))
+        texto_jogar = self.fonte.render('PLAY', True, (0,0,0))
         texto_nome= self.titulo.render('GOLDENFLY', True, (0,0,0))
         caixa_titulo = pygame.Rect(self.caixa_x_titulo, self.caixa_y_titulo, self.caixa_width_titulo, self.caixa_height_titulo )
         pygame.draw.rect(window,(255,255,255), caixa_titulo )
         window.blit(texto_nome,(52,40))
-        window.blit(texto_jogar, (130,326))
+        window.blit(texto_jogar, (139,326))
     
     def colisao_coordenada_rect(self, coordenada_x, coordenada_y):
         self.pos_x = coordenada_x
