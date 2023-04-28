@@ -14,24 +14,23 @@ state = {
 }
 
         
-class Pomo():
+class Pomo:
 
     def __init__(self,posição_x,posição_y):
         self.posição_x = posição_x
         self.posição_y = posição_y
-        self.velocidade_y = 0
+        self.velocidade_y = 0 
         self.angulo = 0
         self.altura = self.posição_y
         self.tempo = 0
-        self.imagem = imagem_pomoouro.convert_alpha()
+        self.imagem = imagem_pomoouro
         self.rotacao_maxima = 25
         self.velocidade_rotacao = 20
         self.angulo = 0
-        self.gravidade = 0
+        self.gravidade = 500
         self.rect = self.imagem.get_rect()
         self.rect.x = self.posição_x
         self.rect.y = self.posição_y
-
 
     def atualiza_estado(self):
 
@@ -63,7 +62,7 @@ class Torre:
     distancia_entre_torres= 140
     velocidade= 200
 
-    def __init__(self, posicao_x, pomo):
+    def __init__(self, posicao_x):
         self.x=posicao_x
         self.altura=0
         self.parte_de_cima=0
@@ -79,8 +78,6 @@ class Torre:
         self.rect2.x = self.x
         self.rect2.y = self.parte_de_baixo
         self.definir_altura()
-
-        self.pomo = pomo
 
     def definir_altura(self):
         self.altura = random.randint(50 ,260)
@@ -106,8 +103,8 @@ class Torre:
         window.blit (self.torre_cima, (self.x, self.parte_de_cima))
         window.blit (self.torre_baixo, (self.x, self.parte_de_baixo ))
 
-    def colidir(self):
-        return self.rect1.colliderect(self.pomo.rect) or self.rect2.colliderect(self.pomo.rect)
+    def colidir(self,pomo_rect):
+        return self.rect1.colliderect(pomo_rect) or self.rect2.colliderect(pomo_rect)
     
 class Tela_Game_Over:
     pygame.quit()
@@ -115,7 +112,7 @@ class Tela_Game_Over:
 class Tela_jogo:
     def __init__(self):
         self.pomo = Pomo(175,210)
-        self.torres = [Torre(350, self.pomo)]
+        self.torres = [Torre(350)]
         self.imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
         fonte_padrao = pygame.font.get_default_font()
         self.fonte = pygame.font.Font(fonte_padrao, 16)
@@ -138,7 +135,7 @@ class Tela_jogo:
                     self.maior_pontuação= self.ponto
         for torre in self.torres:
             if (torre.x <= -50):
-                self.torres.append(Torre(350, self.pomo))
+                self.torres.append(Torre(350))
                 self.torres.remove(torre)
                 
         window.blit(self.texto, (167,30))
@@ -153,7 +150,8 @@ class Tela_jogo:
                 if event.key == pygame.K_SPACE:
                     self.pomo.velocidade_y = -180
                     self.pomo.gravidade = 330
-                if self.torres[0].colidir():
+            for torre in self.torres:
+                if torre.colidir(self.pomo.rect):
                     return 3
         return 2
 
