@@ -15,7 +15,7 @@ def inicializa():
     imagem_tela_inicial_nova = pygame.transform.scale(imagem_tela_inicial, (350, 420))
 
     pomo = Pomo(175,100)
-    torres = [Torre(350, pomo)]
+    torres = [Torre(350)]
     
     # pomo=Pomo_de_ouro_classico(100,210)
     musica_fundo = pygame.mixer.music.load('musica/musica harry potter.mp3')#para tocar a musica de fundo 
