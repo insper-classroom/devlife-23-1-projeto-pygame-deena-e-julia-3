@@ -7,31 +7,22 @@ def inicializa():
     window = pygame.display.set_mode((350, 420))
     pygame.display.set_caption("GoldenFly")
 
-    imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
-    imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.png'))
     imagem_casas = pygame.image.load(os.path.join('fotos','casas.png'))
-    imagem_torre = pygame.image.load(os.path.join('fotos', 'torres_arrumadas.png'))
     imagem_tela_inicial = pygame.image.load(os.path.join('fotos','imagem_inicial.jpg' ))
     imagem_tela_inicial_nova = pygame.transform.scale(imagem_tela_inicial, (350, 420))
 
     pomo = Pomo(175,100)
     torres = [Torre(350)]
     
-    # pomo=Pomo_de_ouro_classico(100,210)
     musica_fundo = pygame.mixer.music.load('musica/musica harry potter.mp3')#para tocar a musica de fundo 
     pygame.mixer.music.play()
     fonte_padrao = pygame.font.get_default_font()
     fonte = pygame.font.Font(fonte_padrao, 16)
 
     assets={
-        'imagem_fundo':imagem_fundo,
-        'pomo_de_ouro':imagem_pomoouro,
         'brazão':imagem_casas,
-        'torre': imagem_torre,
         'tela_inicial': imagem_tela_inicial_nova,
-        'ponto': 0,
-        'fonte_ponto': fonte,
-        'maior_pontuação':0
+        'fonte_ponto': fonte
     }
     return window,assets, pomo, torres
 
@@ -55,18 +46,6 @@ def desenha(window,assets,pomo,torres):
     window.blit(assets['imagem_fundo'],(0,0))
     pomo.desenha(window)
     texto = assets['fonte_ponto'].render(str(assets['ponto']), True,(255,255,255))
-    
-    for torre in torres:
-        torre.desenha(window)
-        torre.estado()
-        if torre.x < -50:
-            assets['ponto']+=1
-            if assets['ponto']> assets['maior_pontuação']:
-                assets['maior_pontuação']= assets['ponto']
-    for torre in torres:
-        if (torre.x <= -50):
-            torres.append(Tela_jogo.Torre(350, pomo))
-            torres.remove(torre)
     window.blit(texto, (167,30))
 
     pygame.display.update()
@@ -78,8 +57,7 @@ def game_loop(window,assets,pomo,torre):
     game = True
     while game:
         indice_proxima_tela = tela.atualiza_estado()
-        print(indice_proxima_tela)
-            
+
         if indice_proxima_tela == -1:
             game = False
         else:
@@ -88,4 +66,3 @@ def game_loop(window,assets,pomo,torre):
             tela.desenha(window)
             pygame.display.update()
             pygame.time.Clock().tick(30)
-   

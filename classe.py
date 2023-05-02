@@ -6,7 +6,6 @@ imagem_pomoouro = pygame.image.load(os.path.join('fotos','pixelado pomo de ouro.
 imagem_torre = pygame.image.load(os.path.join('fotos','torres_arrumadas.png'))
 imagem_torre_nova=pygame.transform.scale(imagem_torre,(50,400))
 imagem_fundo = pygame.image.load(os.path.join('fotos','imagem fundo remasterizada.png'))
-# colocar o som de flappy bird
 state = {
     't0': 0,    
     't':0
@@ -159,8 +158,6 @@ class Tela_jogo:
             torre.atualiza_estado()
             if torre.x < -50:
                 ponto['pontuação']+=1
-        for torre in self.torres:
-            if (torre.x <= -50):
                 self.torres.append(Torre(350))
                 self.torres.remove(torre)
                 
