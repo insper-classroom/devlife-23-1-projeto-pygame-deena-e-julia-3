@@ -11,9 +11,10 @@ def inicializa():
 
     pomo = Pomo(175,100)
     torres = [Torre(350)]
-    
+    # música padrão durante o jogo todo
     musica_fundo = pygame.mixer.music.load('musica/musica harry potter.mp3')#para tocar a musica de fundo 
     pygame.mixer.music.play()
+
     fonte_padrao = pygame.font.get_default_font()
     fonte = pygame.font.Font(fonte_padrao, 16)
 
@@ -49,6 +50,7 @@ def desenha(window,assets,pomo,torres):
     return window, assets,pomo, torres
 
 def game_loop(window,assets,pomo,torre):
+    #  a transição de telas funciona por meio do número retornado (índice) do atualiza_estado de cada tela
     telas = [Tela_inicio(), Tela_Instrucao(), Tela_jogo(), Tela_Game_Over()]
     tela = telas[0]
     game = True
@@ -62,4 +64,5 @@ def game_loop(window,assets,pomo,torre):
             tela = telas[indice_proxima_tela]
             tela.desenha(window)
             pygame.display.update()
+            # fps fixo para todos os frames
             pygame.time.Clock().tick(30)

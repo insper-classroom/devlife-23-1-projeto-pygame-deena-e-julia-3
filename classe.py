@@ -19,13 +19,15 @@ class Pomo:
         self.posição_y = posição_y
         self.velocidade_y = 0 
         self.angulo = 0
-        self.altura = self.posição_y
+        #  self.altura é a altura do pomo desde a última vez que ele pulou
+        self.altura = self.posição_y  
         self.tempo = 0
         self.imagem = imagem_pomoouro
         self.rotacao_maxima = 25
         self.velocidade_rotacao = 20
         self.angulo = 0
-        self.gravidade = 0
+        #  se a gravidade for inicializada com um valor muito alto, o pomo cai direto
+        self.gravidade = 0   
         self.rect = self.imagem.get_rect()
         self.rect.x = self.posição_x
         self.rect.y = self.posição_y
@@ -34,10 +36,12 @@ class Pomo:
         
         t0 = state['t0']
         t1 = pygame.time.get_ticks()
-        calculo = (t1-t0)/1000
+        Delta_T = (t1-t0)/1000
         state['t0'] = t1
-        self.velocidade_y += self.gravidade * calculo
-        self.posição_y += self.velocidade_y * calculo
+        #  fórmula Vy = Vo - g*Delta_T
+        self.velocidade_y += self.gravidade * Delta_T
+        # fórmula Y = Yo + Vy * Delta_T
+        self.posição_y += self.velocidade_y * Delta_T
         if self.posição_y < self.imagem.get_height():
             self.posição_y = self.imagem.get_height()
             self.velocidade_y = -self.velocidade_y
@@ -56,10 +60,10 @@ class Pomo:
         
     
 class Torre:
-
+    #  constantes
     distancia_entre_torres= 140
     velocidade= 150
-
+    #  a torre terá como y uma posição fixa, porém o seu x será randomizado
     def __init__(self, posicao_x):
         self.x=posicao_x
         self.altura=0
@@ -102,7 +106,9 @@ class Torre:
         window.blit (self.torre_baixo, (self.x, self.parte_de_baixo ))
 
     def colidir(self,pomo_rect):
+        #  colisão do pomo tanto com a torre de cima quanto com a torre de baixo
         return self.rect1.colliderect(pomo_rect) or self.rect2.colliderect(pomo_rect)
+
 ponto={
     'pontuação':-1
 }
@@ -174,7 +180,8 @@ class Tela_jogo:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.pomo.velocidade_y = -280
-                    self.pomo.gravidade = 550
+                    # redefinimos a gravidade aqui para o pomo poder pular, ou seja, se movimentar com a força da gravidade 
+                    self.pomo.gravidade = 550 
                     flap = pygame.mixer.Sound('musica/flap.mp3')#para tocar a musica de fundo 
                     flap.play()
         for torre in self.torres:
@@ -257,6 +264,7 @@ class Tela_inicio:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return -1
+            #  apenas ocorrerá a transição de tela se a posição do mouse for exatamente na caixa de texto
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.mouse.get_pos()
                 if self.colisao_coordenada_rect(event.pos[0], event.pos[1]):
