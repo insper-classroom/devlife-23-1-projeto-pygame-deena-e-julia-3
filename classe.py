@@ -175,8 +175,12 @@ class Tela_jogo:
                 if event.key == pygame.K_SPACE:
                     self.pomo.velocidade_y = -280
                     self.pomo.gravidade = 550
+                    flap = pygame.mixer.Sound('musica/flap.mp3')#para tocar a musica de fundo 
+                    flap.play()
         for torre in self.torres:
             if torre.colidir(self.pomo.rect):
+                collide = pygame.mixer.Sound('musica/hit.mp3')#para tocar a musica de fundo 
+                collide.play()
                 return 3
         return 2
 

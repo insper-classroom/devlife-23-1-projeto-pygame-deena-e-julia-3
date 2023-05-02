@@ -8,8 +8,6 @@ def inicializa():
     pygame.display.set_caption("GoldenFly")
 
     imagem_casas = pygame.image.load(os.path.join('fotos','casas.png'))
-    imagem_tela_inicial = pygame.image.load(os.path.join('fotos','imagem_inicial.jpg' ))
-    imagem_tela_inicial_nova = pygame.transform.scale(imagem_tela_inicial, (350, 420))
 
     pomo = Pomo(175,100)
     torres = [Torre(350)]
@@ -21,7 +19,6 @@ def inicializa():
 
     assets={
         'brazão':imagem_casas,
-        'tela_inicial': imagem_tela_inicial_nova,
         'fonte_ponto': fonte
     }
     return window,assets, pomo, torres
