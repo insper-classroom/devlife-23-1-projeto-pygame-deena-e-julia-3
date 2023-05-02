@@ -32,7 +32,7 @@ class Pomo:
         self.rect.y = self.posição_y
 
     def atualiza_estado(self):
-
+        
         t0 = state['t0']
         t1 = pygame.time.get_ticks()
         calculo = (t1-t0)/1000
@@ -105,7 +105,7 @@ class Torre:
     def colidir(self,pomo_rect):
         return self.rect1.colliderect(pomo_rect) or self.rect2.colliderect(pomo_rect)
 ponto={
-    'pontuação':0
+    'pontuação':-1
 }
 
 class Tela_Game_Over:
@@ -153,7 +153,6 @@ class Tela_jogo:
     def desenha(self, window):
         window.blit(self.imagem_fundo,(0,0))
         self.pomo.desenha(window)
-        self.texto = self.fonte.render(str(ponto['pontuação']), True,(255,255,255))
 
         for torre in self.torres:
             torre.desenha(window)
@@ -165,6 +164,7 @@ class Tela_jogo:
                 self.torres.append(Torre(350))
                 self.torres.remove(torre)
                 
+        self.texto = self.fonte.render(str(ponto['pontuação']), True,(255,255,255))
         window.blit(self.texto, (167,30))
 
 
