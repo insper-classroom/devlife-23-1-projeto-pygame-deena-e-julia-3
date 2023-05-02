@@ -138,14 +138,7 @@ class Tela_Game_Over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return -1
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pygame.mouse.get_pos()
-                if self.colisao_caixa_jogar_dnv(event.pos[0], event.pos[1]):
-                    ponto['pontuação']=0
-                    return 3
-            
         return 3
-
 
 
 
